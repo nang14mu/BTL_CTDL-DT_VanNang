@@ -68,6 +68,9 @@ class queue{
         bool empty(){
             return n==0;
         }
+        int size(){
+         return n;
+        }
 };
 
 #endif
