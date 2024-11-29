@@ -32,7 +32,7 @@ istream &operator >> (istream &is, Car &x){
 	is >> x.price;
 	return is;
 }
-ostream &operator << (ostream &os, Car x){
+ostream &operator << (ostream &os, Car &x){
 	os <<left<< x.ten << setw(20) << x.hang << setw(20)<< x.id<<setw(20)<< x.price <<endl; 
 	return os;
 }
