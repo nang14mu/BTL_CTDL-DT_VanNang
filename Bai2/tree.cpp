@@ -153,32 +153,36 @@ bool Tree<T>::isRoot(TreeNode<T>* node){
 }
 
 template<class T>
-void Tree<T>::insert(T elm){
-	TreeNode<T>* newTreeNode = new TreeNode<T>(elm);
-	if(root==nullptr){
-		root=newTreeNode;
-		return;
-	}
-	queue<TreeNode<T>*> q;
-	q.push(root);
+void Tree<T>::insert(T elm) {
+    TreeNode<T>* newTreeNode = new TreeNode<T>(elm);
+    if (root == nullptr) {
+        root = newTreeNode;
+        return;
+    }
 
-	while(!q.empty()){
-		TreeNode<T>* t=q.front();
-		q.pop();
-		if(t->getLeft()==nullptr){
-			t->setLeft(newTreeNode);
-			return;
-		} else{
-			q.push(t->getLeft());
-		}
-		if(t->getRight()==nullptr){
-			t->setRight(newTreeNode);
-			return;
-		} else{
-			q.push(t->getRight());
-		}
+    queue<TreeNode<T>*> q;
+    q.push(root);
 
-	}
+    while (!q.empty()) {
+        TreeNode<T>* t = q.front();
+        q.pop();
+
+        if (t->getLeft() == nullptr) {
+            t->setLeft(newTreeNode);
+            newTreeNode->setParent(t);
+            return;
+        } else {
+            q.push(t->getLeft());
+        }
+
+        if (t->getRight() == nullptr) {
+            t->setRight(newTreeNode);
+            newTreeNode->setParent(t); 
+            return;
+        } else {
+            q.push(t->getRight());
+        }
+    }
 }
 template<class T>
 void Tree<T>::preOder(TreeNode<T>* node, void(*visit)(TreeNode<T>* node)){
@@ -252,13 +256,24 @@ TreeNode<T>* Tree<T>::find(TreeNode<T>* node,T elm){
 }
 
 template<class T>
-void Tree<T>::remove(TreeNode<T>* node){
-	if(node==nullptr){
-		return;
-	}
-	remove(node->getLeft());
-	remove(node->getRight());
-	delete node;
+void Tree<T>::remove(TreeNode<T>* node) {
+    if (node == nullptr) {
+        return;
+    }
+
+    if (!isRoot(node)) {
+        TreeNode<T>* parent = node->getParent();
+        if (parent->getLeft() == node) {
+            parent->setLeft(nullptr);
+        } else if (parent->getRight() == node) {
+            parent->setRight(nullptr);
+        }
+    } else {
+        root = nullptr;
+    }
+    remove(node->getLeft());
+    remove(node->getRight());
+    delete node;
 }
 template<class T>
 void print(TreeNode<T>* node){
