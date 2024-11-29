@@ -13,7 +13,7 @@ class Car{
         int count;
 	public:
 		friend istream &operator>>(istream &is, Car &x);
-		friend ostream &operator << (ostream &os, Car x);
+		friend ostream &operator << (ostream &os, Car &x);
 		bool operator < (const Car &x){
 			return this->id < x.id;
 		}
