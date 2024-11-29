@@ -197,7 +197,6 @@ class app{
             list.nhapdsf();
         };
 		void menu();
-		~app(){};
 };
 void app::menu(){
     int choice;
